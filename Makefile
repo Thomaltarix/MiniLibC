@@ -13,7 +13,7 @@ NAME	= libasm.so
 TEST_NAME = unit_tests
 
 ## Sources
-SRC	= src/tmp.asm			\
+SRC	= src/strlen.asm		\
 
 OBJ	= $(SRC:.asm=.o)
 
@@ -23,7 +23,8 @@ ASMFLAGS	= -f elf64
 
 
 ## Tests
-TEST_SRC	= tests/tmp.c		\
+TEST_SRC	=	tests/tests_strlen.c	\
+				tests/my_strlen.c		\
 
 .PHONY:	all clean fclean re
 
@@ -46,7 +47,7 @@ fclean:	clean
 
 re:	fclean all
 
-tests_run: fclean
+tests_run: all
 		gcc -o $(TEST_NAME) $(TEST_SRC) -lcriterion
 
 test:	tests_run
