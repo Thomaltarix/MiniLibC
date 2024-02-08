@@ -1,6 +1,6 @@
 BITS 64                 ; 64-bit mode
 SECTION .text           ; Code section
-GLOBAL strlen        ; export "_start"
+GLOBAL strlen        ; export "strlen"
 
 strlen:              ; Loops through the string to return its len
         ENTER 0, 0              ; Starts the program
