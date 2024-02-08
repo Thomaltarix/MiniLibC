@@ -48,5 +48,5 @@ fclean:	clean
 re:	fclean all
 
 tests_run: all
-		gcc -o $(TEST_NAME) $(TEST_SRC) -lcriterion
+		gcc -o $(TEST_NAME) $(TEST_SRC) -lcriterion --coverage
 		./$(TEST_NAME)
