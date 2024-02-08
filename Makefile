@@ -13,7 +13,8 @@ NAME	= libasm.so
 TEST_NAME = unit_tests
 
 ## Sources
-SRC	= src/strlen.asm		\
+SRC	=	src/strlen.asm		\
+		src/strchr.asm		\
 
 OBJ	= $(SRC:.asm=.o)
 
@@ -23,8 +24,10 @@ ASMFLAGS	= -f elf64
 
 
 ## Tests
-TEST_SRC	=	tests/tests_strlen.c	\
-				tests/my_strlen.c		\
+TEST_SRC	=	tests/my_strlen.c		\
+				tests/tests_strlen.c	\
+				tests/my_strchr.c		\
+				tests/tests_strchr.c	\
 
 .PHONY:	all clean fclean re
 
@@ -34,7 +37,7 @@ $(NAME):	$(OBJ)
 		ld -shared -o $(NAME) $(OBJ)
 
 %.o:	%.asm
-		$(ASM) $(ASMFLAGS) $(SRC)
+		$(ASM) $(ASMFLAGS) $< -o $@
 
 clean:
 		rm -f $(OBJ)
@@ -48,5 +51,5 @@ fclean:	clean
 re:	fclean all
 
 tests_run: all
-		gcc -o $(TEST_NAME) $(TEST_SRC) -lcriterion
+		gcc -o $(TEST_NAME) $(TEST_SRC) -lcriterion --coverage
 		./$(TEST_NAME)

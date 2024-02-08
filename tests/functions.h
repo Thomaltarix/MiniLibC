@@ -8,3 +8,6 @@
 #pragma once
 
 int my_strlen(char *str);
+char *my_strchr(const char *s, int c);
+
+void redirect_all_std(void);
