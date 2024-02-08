@@ -1,8 +1,8 @@
 BITS 64                 ; 64-bit mode
 SECTION .text           ; Code section
-GLOBAL my_strlen        ; export "_start"
+GLOBAL strlen        ; export "_start"
 
-my_strlen:              ; Loops through the string to return its len
+strlen:              ; Loops through the string to return its len
         ENTER 0, 0              ; Starts the program
         MOV RCX, 0              ; Initializes the counter
 
