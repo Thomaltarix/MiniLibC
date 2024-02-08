@@ -7,14 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  checker:
-    name: Code checker
-    if: github.event_name == 'push'
-    uses: ./.github/workflows/checker.yml
-
   push_to_mirror:
     name: Cloning to Epitech repository
-    needs: [checker]
     runs-on: ubuntu-latest
 
     steps:
