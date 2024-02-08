@@ -49,6 +49,4 @@ re:	fclean all
 
 tests_run: all
 		gcc -o $(TEST_NAME) $(TEST_SRC) -lcriterion
-
-test:	tests_run
 		./$(TEST_NAME)
