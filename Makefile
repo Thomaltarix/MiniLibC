@@ -34,7 +34,7 @@ $(NAME):	$(OBJ)
 		ld -shared -o $(NAME) $(OBJ)
 
 %.o:	%.asm
-		$(ASM) $(ASMFLAGS) $(SRC)
+		$(ASM) $(ASMFLAGS) $< -o $@
 
 clean:
 		rm -f $(OBJ)
