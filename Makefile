@@ -15,6 +15,7 @@ TEST_NAME = unit_tests
 ## Sources
 SRC	=	src/strlen.asm		\
 		src/strchr.asm		\
+		src/strrchr.asm		\
 
 OBJ	= $(SRC:.asm=.o)
 
@@ -28,6 +29,8 @@ TEST_SRC	=	tests/my_strlen.c		\
 				tests/tests_strlen.c	\
 				tests/my_strchr.c		\
 				tests/tests_strchr.c	\
+				tests/my_strrchr.c		\
+				tests/tests_strrchr.c	\
 
 .PHONY:	all clean fclean re
 
