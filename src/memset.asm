@@ -5,6 +5,7 @@ GLOBAL memset        ; export "memset"
 memset:
         ENTER 0, 0       ; starts the program
         MOV RCX, RDX    ; Move the value of RDX into RCX
+        MOV RAX, RDI    ; Move the value of RDI into RAX
 
         .loop:
                 CMP RCX, 0      ; If RCX is 0, we are done
