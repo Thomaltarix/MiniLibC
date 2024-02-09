@@ -37,12 +37,23 @@ Test(my_strrchr, long_strrchr, .init = redirect_all_std)
     cr_assert_str_eq(my_result, result);
 }
 
-// Test(my_strrchr, not_found_strrchr, .init = redirect_all_std)
-// {
-//     char *test = "Hello, World!";
-//     char *my_result;
-//     char *result;
+Test(my_strrchr, not_found_strrchr, .init = redirect_all_std)
+{
+    char *test = "Hello, World!";
+    char *my_result;
+    char *result;
 
-//     my_result = my_strrchr(test, 'z');
-//     cr_assert_eq(my_result, NULL);
-// }
+    my_result = my_strrchr(test, 'z');
+    cr_assert_eq(my_result, NULL);
+}
+
+Test(my_strrchr, empty_strrchr, .init = redirect_all_std)
+{
+    char *test = "";
+    char *my_result;
+    char *result;
+
+    my_result = my_strrchr(test, 'z');
+    result = strrchr(test, 'z');
+    cr_assert_eq(my_result, result);
+}
