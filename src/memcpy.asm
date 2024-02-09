@@ -10,8 +10,8 @@ memcpy:
         .loop:
                 CMP RCX, 0      ; If length is 0, we're done
                 JE .done
-                MOV BYTE [RSI], R8B ; Copy the byte to a tmp register
-                MOV BYTE [RDI], R8B ; Copy the byte to the destination
+                MOV R8B, BYTE [RSI]   ; Copy the byte to a tmp register
+                MOV BYTE [RDI], R8B   ; Copy the byte to the destination
                 INC RDI         ; Move source pointer
                 INC RSI         ; Move destination pointer
                 DEC RCX         ; Decrement length
