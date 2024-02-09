@@ -5,8 +5,6 @@
 ** tests_memset
 */
 
-#include <criterion/criterion.h>
-#include <criterion/redirect.h>
 #include "functions.h"
 
 void *my_memset(void *s, int c, size_t n)
