@@ -5,8 +5,6 @@
 ** tests_memset
 */
 
-#include <criterion/criterion.h>
-#include <criterion/redirect.h>
 #include "functions.h"
 
 void *my_memcpy(void *restrict dest, const void *restrict src, size_t n)

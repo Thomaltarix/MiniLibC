@@ -5,8 +5,6 @@
 ** tests_strchr
 */
 
-#include <criterion/criterion.h>
-#include <criterion/redirect.h>
 #include "functions.h"
 
 char *my_strchr(const char *s, int c)

@@ -5,8 +5,6 @@
 ** strlen
 */
 
-#include <criterion/criterion.h>
-#include <criterion/redirect.h>
 #include "functions.h"
 
 int my_strlen(char *str)
