@@ -9,6 +9,28 @@
 #include <criterion/redirect.h>
 #include "functions.h"
 
+char *my_strchr(const char *s, int c)
+{
+    void *handle;
+    char *(*function)(const char *, int);
+    char *error;
+    char *result;
+
+    handle = dlopen("./libasm.so", RTLD_LAZY);
+    if (!handle) {
+        fprintf(stderr, "%s\n", dlerror());
+        return NULL;
+    };
+    function = dlsym(handle, "strchr");
+    if ((error = dlerror()) != NULL) {
+        fprintf(stderr, "%s\n", error);
+        return NULL;
+    }
+    result = function(s, c);
+    dlclose(handle);
+    return result;
+}
+
 Test(strchr, simple_sentence, .init = redirect_all_std)
 {
     char *test = "Hello, World!";
