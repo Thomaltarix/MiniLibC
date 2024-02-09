@@ -27,15 +27,10 @@ ASMFLAGS	= -f elf64
 
 
 ## Tests
-TEST_SRC	=	tests/my_strlen.c		\
-				tests/tests_strlen.c	\
-				tests/my_strchr.c		\
+TEST_SRC	=	tests/tests_strlen.c	\
 				tests/tests_strchr.c	\
-				tests/my_strrchr.c		\
 				tests/tests_strrchr.c	\
-				tests/my_memset.c		\
 				tests/tests_memset.c	\
-				tests/my_memcpy.c		\
 				tests/tests_memcpy.c	\
 
 .PHONY:	all clean fclean re
