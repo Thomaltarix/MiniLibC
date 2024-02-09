@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <dlfcn.h>
+
 int my_strlen(char *str);
 char *my_strchr(const char *s, int c);
 char *my_strrchr(const char *s, int c);
