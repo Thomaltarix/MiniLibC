@@ -76,3 +76,25 @@ Test(strchr, empty_string, .init = redirect_all_std)
     my_result = my_strchr(test, 'z');
     cr_assert_eq(my_result, NULL);
 }
+
+Test(strchr, zero_ended_string, .init = redirect_all_std)
+{
+    char *test = "Hello, World!\0";
+    char *my_result;
+    char *result;
+
+    my_result = my_strchr(test, '\0');
+    result = strchr(test, '\0');
+    cr_assert_eq(my_result, result);
+}
+
+Test(strchr, zero_ended_string_only, .init = redirect_all_std)
+{
+    char *test = "";
+    char *my_result;
+    char *result;
+
+    my_result = my_strchr(test, '\0');
+    result = strchr(test, '\0');
+    cr_assert_eq(my_result, result);
+}
