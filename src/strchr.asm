@@ -1,7 +1,8 @@
 BITS 64                 ; 64-bit mode
 SECTION .text           ; Code section
-GLOBAL strchr        ; export "strchr"
+GLOBAL strchr, index        ; export "strchr"
 
+index:
 strchr:
         ENTER 0,0           ; starts the program
 
