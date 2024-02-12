@@ -2,12 +2,12 @@
 ** EPITECH PROJECT, 2024
 ** MiniLibC
 ** File description:
-** tests_strchr
+** tests_strrchr
 */
 
 #include "functions.h"
 
-char *my_strchr(const char *s, int c)
+char *my_strrchr(const char *s, int c)
 {
     void *handle;
     char *(*function)(const char *, int);
@@ -19,7 +19,7 @@ char *my_strchr(const char *s, int c)
         fprintf(stderr, "%s\n", dlerror());
         return NULL;
     };
-    function = dlsym(handle, "strchr");
+    function = dlsym(handle, "strrchr");
     if ((error = dlerror()) != NULL) {
         fprintf(stderr, "%s\n", error);
         return NULL;
@@ -29,18 +29,18 @@ char *my_strchr(const char *s, int c)
     return result;
 }
 
-Test(strchr, simple_sentence, .init = redirect_all_std)
+Test(my_strrchr, simple_strrchr, .init = redirect_all_std)
 {
-    char *test = "Hello, World!";
+    char *test = "Hello!";
     char *my_result;
     char *result;
 
-    my_result = my_strchr(test, 'W');
-    result = strchr(test, 'W');
-    cr_assert_eq(my_result, result);
+    my_result = my_strrchr(test, 'l');
+    result = strrchr(test, 'l');
+    cr_assert_str_eq(my_result, result);
 }
 
-Test(strchr, long_sentence, .init = redirect_all_std)
+Test(my_strrchr, long_strrchr, .init = redirect_all_std)
 {
     char *test = "lorem ipsum dolor sit amet, consectetur adipiscing elit.\
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\
@@ -52,27 +52,28 @@ Test(strchr, long_sentence, .init = redirect_all_std)
     char *my_result;
     char *result;
 
-    my_result = my_strchr(test, 'a');
-    result = strchr(test, 'a');
-    cr_assert_eq(my_result, result);
+    my_result = my_strrchr(test, 'a');
+    result = strrchr(test, 'a');
+    cr_assert_str_eq(my_result, result);
 }
 
-Test(strchr, not_found, .init = redirect_all_std)
+Test(my_strrchr, not_found_strrchr, .init = redirect_all_std)
 {
     char *test = "Hello, World!";
     char *my_result;
     char *result;
 
-    my_result = my_strchr(test, 'z');
+    my_result = my_strrchr(test, 'z');
     cr_assert_eq(my_result, NULL);
 }
 
-Test(strchr, empty_string, .init = redirect_all_std)
+Test(my_strrchr, empty_strrchr, .init = redirect_all_std)
 {
     char *test = "";
     char *my_result;
     char *result;
 
-    my_result = my_strchr(test, 'z');
-    cr_assert_eq(my_result, NULL);
+    my_result = my_strrchr(test, 'z');
+    result = strrchr(test, 'z');
+    cr_assert_eq(my_result, result);
 }

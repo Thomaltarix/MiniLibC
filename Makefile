@@ -15,6 +15,10 @@ TEST_NAME = unit_tests
 ## Sources
 SRC	=	src/strlen.asm		\
 		src/strchr.asm		\
+		src/strrchr.asm		\
+		src/memset.asm		\
+		src/memcpy.asm		\
+		src/strcmp.asm		\
 
 OBJ	= $(SRC:.asm=.o)
 
@@ -24,10 +28,12 @@ ASMFLAGS	= -f elf64
 
 
 ## Tests
-TEST_SRC	=	tests/my_strlen.c		\
-				tests/tests_strlen.c	\
-				tests/my_strchr.c		\
+TEST_SRC	=	tests/tests_strlen.c	\
 				tests/tests_strchr.c	\
+				tests/tests_strrchr.c	\
+				tests/tests_memset.c	\
+				tests/tests_memcpy.c	\
+				tests/tests_strcmp.c	\
 
 .PHONY:	all clean fclean re
 
