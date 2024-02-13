@@ -12,7 +12,7 @@ strcmp:
                 MOV R8B, BYTE [RDI] ; Load byte from first string
                 MOV R9B, BYTE [RSI] ; Load byte from second string
                 CMP R8B, R9B        ; Compare bytes
-                JE .are_equal           ; If not equal, jump to done
+                JE .are_equal           ; If not equal, jump to are_equal
                 MOV RAX, R8        ; Move byte to RAX
                 SUB RAX, R9        ; Subtract second byte from first byte
                 LEAVE               ; Epilogue
