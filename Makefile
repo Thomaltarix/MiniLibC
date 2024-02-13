@@ -37,6 +37,9 @@ TEST_SRC	=	tests/tests_strlen.c	\
 				tests/tests_memset.c	\
 				tests/tests_memcpy.c	\
 				tests/tests_strcmp.c	\
+				tests/tests_memmove.c	\
+				tests/tests_strncmp.c	\
+				tests/tests_strcasecmp.c\
 
 .PHONY:	all clean fclean re
 
