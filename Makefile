@@ -20,6 +20,8 @@ SRC	=	src/strlen.asm		\
 		src/memcpy.asm		\
 		src/strcmp.asm		\
 		src/memmove.asm		\
+		src/strncmp.asm		\
+		src/strcasecmp.asm	\
 
 OBJ	= $(SRC:.asm=.o)
 
@@ -35,7 +37,6 @@ TEST_SRC	=	tests/tests_strlen.c	\
 				tests/tests_memset.c	\
 				tests/tests_memcpy.c	\
 				tests/tests_strcmp.c	\
-				tests/tests_memmove.c	\
 
 .PHONY:	all clean fclean re
 
