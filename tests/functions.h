@@ -7,8 +7,8 @@
 
 #pragma once
 
-int my_strlen(char *str);
-char *my_strchr(const char *s, int c);
-char *my_strstr(const char *haystack, const char *needle);
+#include <dlfcn.h>
+#include <criterion/criterion.h>
+#include <criterion/redirect.h>
 
 void redirect_all_std(void);

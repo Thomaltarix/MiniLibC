@@ -1,17 +1,23 @@
 BITS 64                 ; 64-bit mode
 SECTION .text           ; Code section
-GLOBAL strchr, index        ; export "strchr"
+GLOBAL strrchr, rindex        ; export "strrchr"
 
-index:
-strchr:
-        ENTER 0,0           ; starts the program
+rindex:
+strrchr:
+        ENTER 0, 0       ; starts the program
+
+        .start_loop:
+                CMP BYTE [RDI + 1], 0       ; Checks if it's the end of the string
+                JE .loop                ; True -> jump to the loop
+                INC RDI                 ; Increments the pointer
+                JMP .start_loop         ; Jumps to itself
 
         .loop:              ; loop to find the c character
-                CMP BYTE [RDI], SIL     ; Checks if the caracters of s is c
-                JE .end                 ; True -> jump to the end
                 CMP BYTE [RDI], 0       ; Checks if it's the end of the string
                 JE .not_found           ; True -> jump to the end
-                INC RDI                 ; Increments the pointer
+                CMP BYTE [RDI], SIL     ; Checks if the caracters of s is c
+                JE .end                 ; True -> jump to the end
+                DEC RDI                 ; Decrements the pointer
                 JMP .loop               ; Jumps to itself
 
         .end:                ; End of the program
