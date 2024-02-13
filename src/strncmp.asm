@@ -1,14 +1,16 @@
 BITS 64                 ; 64-bit mode
 SECTION .text           ; Code section
-GLOBAL strcmp        ; export "strcmp"
+GLOBAL strncmp        ; export "strncmp"
 
-strcmp:
+strncmp:
         ENTER 0, 0      ; Prologue
         MOV RCX, 0      ; Initialize counter
         XOR R8, R8      ; Clear R8
         XOR R9, R9      ; Clear R9
 
         .loop:
+                CMP RDX, 0      ; Check for null terminator
+                JE .exit        ; If null terminator, jump to exit
                 MOV R8B, BYTE [RDI] ; Load byte from first string
                 MOV R9B, BYTE [RSI] ; Load byte from second string
                 CMP R8B, R9B        ; Compare bytes
@@ -23,6 +25,7 @@ strcmp:
                 JE .exit        ; If null terminator, jump to exit
                 INC RDI         ; Increment first string pointer
                 INC RSI         ; Increment second string pointer
+                DEC RDX         ; Decrement counter
                 JMP .loop       ; Jump to loop
 
         .exit:
