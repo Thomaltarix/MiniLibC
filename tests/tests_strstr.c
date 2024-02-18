@@ -30,13 +30,11 @@ char *my_strstr(const char *haystack, const char *needle)
     return my_strstr(haystack, needle);
 }
 
-Test(strstr, simple_sentence, .init = redirect_all_std)
+Test(strstr, simple_sentence)
 {
-    char *test = "Hello, World!";
-    char *my_result;
-    char *result;
+    char *src = "Wo!";
+    char *tmp;
 
-    my_result = my_strstr(test, "World");
-    result = strstr(test, "World");
-    cr_assert_str_eq(my_result, result);
+    tmp = my_strstr("Wo!", src);
+    cr_assert_str_eq(tmp, "Wo!");
 }

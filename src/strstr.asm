@@ -3,27 +3,41 @@ SECTION .text           ; Code section
 GLOBAL strstr           ; export "strstr"
 
 strstr:
-        ENTER 0, 0      ; Prologue
+        ENTER 0,0           ; starts the program
+        MOV RDX, RSI        ; Moves the pointer of s to RDX
 
-        .loop:          ; Loops to find the first character of needle
-                CMP BYTE [RDI], 0       ; Check if the string is empty
-                JE .not_found           ; If it is, return NULL
-                CMP BYTE [RSI], 0       ; Check if the needle is empty
-                JE .done                ; If it is, jump to the done label
-                CMP BYTE [RDI], [RSI]   ; Check the first character of needle with the current character of haystack
-                JE .found               ; If they are equal, jump to the found label
+        .loop:              ; loop to find the c character
+                MOV R8B, BYTE [RDX]          ; Moves the character of s to R8B
+                CMP BYTE [RDI], R8B     ; Compares the character of s with the character of needle
+                JNE .not_equal          ; If the characters are not equal, jump to .not_equal
+                JE .equal               ; If the characters are equal, jump to .equal
 
-        .not_found:
-                MOV RAX, 0              ; Return NULL
-                LEAVE                   ; Epilogue
-                RET                     ; Return
+        .not_equal:
+                INC RDI                ; Increments the pointer of haystack
+                JMP .loop              ; Jumps to the beginning of the loop
 
-        .done:
-                MOV RAX, RDI            ; Return the position of the first character of needle
-                LEAVE                   ; Epilogue
-                RET                     ; Return
+        .equal:
+                MOV RCX, RDI           ; Moves the pointer of haystack to RCX
+                INC RCX                ; Increments the pointer of haystack
+                MOV RSI, RDX           ; Moves the pointer of s to RSI
+                INC RSI                ; Increments the pointer of s
+                JMP .compare           ; Jumps to .compare
 
-        .next:          ; Passes to the next occurent of the first character of needle
-                MOV RDI, RDX            ; Move the haystack pointer to the next character
-                INC RDI                 ; Increment the pointer
-                JMP .loop               ; Jump to the loop label
+        .compare:
+                CMP BYTE [RCX], 0         ; Compares the character of haystack with the null character
+                JE .end                    ; If the character is the null character, jump to .end
+                CMP BYTE [RSI], 0         ; Compares the character of s with the null character
+                JE .end                    ; If the character is the null character, jump to .end
+                MOV R8B, BYTE [RSI]         ; Moves the character of s to R8B
+                CMP BYTE [RCX], R8B         ; Compares the character of s with the character of needle
+                JE .equal2                 ; If the characters are equal, jump to .equal2
+
+        .equal2:
+                INC RCX                ; Increments the pointer of haystack
+                INC RSI                ; Increments the pointer of s
+                JMP .compare           ; Jumps to the beginning of the loop
+
+        .end:
+                MOV RAX, RDI           ; Moves the pointer of haystack to RAX
+                LEAVE                  ; Ends the program
+                RET                    ; Returns the pointer of haystack
