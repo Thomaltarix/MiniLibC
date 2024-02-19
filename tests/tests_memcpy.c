@@ -13,7 +13,7 @@ void *my_memcpy(void *restrict dest, const void *restrict src, size_t n)
     void *(*my_memcpy)(void *restrict, const void *restrict, size_t);
     char *error;
 
-    handle = dlopen("libc.so.6", RTLD_LAZY);
+    handle = dlopen("./libasm.so", RTLD_LAZY);
     if (!handle) {
         fprintf(stderr, "%s\n", dlerror());
         return NULL;
