@@ -3,7 +3,7 @@ SECTION .text           ; Code section
 GLOBAL strstr           ; export "strstr"
 
 strstr:
-        ENTER 0, 0      ; Prologue
+        ENTER 0, 0      ; Prolog
         MOV RCX, 0      ; Initialize the counter
         MOV RDX, 0      ; Initialize the second counter
         JMP .loop
