@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2024
 ** MiniLibC
 ** File description:
-** tests_strchr
+** tests_strstr
 */
 
 #include "functions.h"
 
-char *my_strchr(const char *s, int c)
+char *my_strstr(const char *haystack, const char *needle)
 {
     void *handle;
-    char *(*function)(const char *, int);
+    char *(*my_strstr)(const char *, const char *);
     char *error;
     char *result;
 
@@ -18,29 +18,29 @@ char *my_strchr(const char *s, int c)
     if (!handle) {
         fprintf(stderr, "%s\n", dlerror());
         return NULL;
-    };
-    function = dlsym(handle, "strchr");
+    }
+    my_strstr = dlsym(handle, "strstr");
     if ((error = dlerror()) != NULL) {
         fprintf(stderr, "%s\n", error);
         return NULL;
     }
-    result = function(s, c);
+    result = my_strstr(haystack, needle);
     dlclose(handle);
     return result;
 }
 
-Test(strchr, simple_sentence, .init = redirect_all_std)
+Test(strstr, simple_sentence)
 {
     char *test = "Hello, World!";
     char *my_result;
     char *result;
 
-    my_result = my_strchr(test, 'W');
-    result = strchr(test, 'W');
+    my_result = my_strstr(test, "World");
+    result = strstr(test, "World");
     cr_assert_eq(my_result, result);
 }
 
-Test(strchr, long_sentence, .init = redirect_all_std)
+Test(strstr, long_sentence)
 {
     char *test = "lorem ipsum dolor sit amet, consectetur adipiscing elit.\
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\
@@ -52,49 +52,73 @@ Test(strchr, long_sentence, .init = redirect_all_std)
     char *my_result;
     char *result;
 
-    my_result = my_strchr(test, 'a');
-    result = strchr(test, 'a');
+    my_result = my_strstr(test, "adipiscing");
+    result = strstr(test, "adipiscing");
     cr_assert_eq(my_result, result);
 }
 
-Test(strchr, not_found, .init = redirect_all_std)
+Test(strstr, not_found)
 {
     char *test = "Hello, World!";
     char *my_result;
     char *result;
 
-    my_result = my_strchr(test, 'z');
-    cr_assert_eq(my_result, NULL);
+    my_result = my_strstr(test, "test");
+    result = strstr(test, "test");
+    cr_assert_eq(my_result, result);
 }
 
-Test(strchr, empty_string, .init = redirect_all_std)
+Test(strstr, empty_needle)
+{
+    char *test = "Hello, World!";
+    char *my_result;
+    char *result;
+
+    my_result = my_strstr(test, "");
+    result = strstr(test, "");
+    cr_assert_eq(my_result, result);
+}
+
+Test(strstr, empty_string)
 {
     char *test = "";
     char *my_result;
     char *result;
 
-    my_result = my_strchr(test, 'z');
-    cr_assert_eq(my_result, NULL);
+    my_result = my_strstr(test, "z");
+    result = strstr(test, "z");
+    cr_assert_eq(my_result, result);
 }
 
-Test(strchr, zero_ended_string, .init = redirect_all_std)
+Test(strstr, zero_ended_string)
 {
     char *test = "Hello, World!\0";
     char *my_result;
     char *result;
 
-    my_result = my_strchr(test, '\0');
-    result = strchr(test, '\0');
+    my_result = my_strstr(test, "World");
+    result = strstr(test, "World");
     cr_assert_eq(my_result, result);
 }
 
-Test(strchr, zero_ended_string_only, .init = redirect_all_std)
+Test(strstr, zero_ended_string_only)
 {
     char *test = "";
     char *my_result;
     char *result;
 
-    my_result = my_strchr(test, '\0');
-    result = strchr(test, '\0');
+    my_result = my_strstr(test, "\0");
+    result = strstr(test, "\0");
+    cr_assert_eq(my_result, result);
+}
+
+Test(strstr, zero_ended_string_needle)
+{
+    char *test = "Hello, World!\0";
+    char *my_result;
+    char *result;
+
+    my_result = my_strstr(test, "\0");
+    result = strstr(test, "\0");
     cr_assert_eq(my_result, result);
 }

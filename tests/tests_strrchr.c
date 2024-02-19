@@ -5,9 +5,29 @@
 ** tests_strrchr
 */
 
-#include <criterion/criterion.h>
-#include <criterion/redirect.h>
 #include "functions.h"
+
+char *my_strrchr(const char *s, int c)
+{
+    void *handle;
+    char *(*function)(const char *, int);
+    char *error;
+    char *result;
+
+    handle = dlopen("./libasm.so", RTLD_LAZY);
+    if (!handle) {
+        fprintf(stderr, "%s\n", dlerror());
+        return NULL;
+    };
+    function = dlsym(handle, "strrchr");
+    if ((error = dlerror()) != NULL) {
+        fprintf(stderr, "%s\n", error);
+        return NULL;
+    }
+    result = function(s, c);
+    dlclose(handle);
+    return result;
+}
 
 Test(my_strrchr, simple_strrchr, .init = redirect_all_std)
 {
@@ -57,3 +77,14 @@ Test(my_strrchr, empty_strrchr, .init = redirect_all_std)
     result = strrchr(test, 'z');
     cr_assert_eq(my_result, result);
 }
+
+// Test(my_strrchr, zero_ended_strrchr, .init = redirect_all_std)
+// {
+//     char *test = "";
+//     char *my_result;
+//     char *result;
+
+//     my_result = my_strrchr(test, '\0');
+//     result = strrchr(test, '\0');
+//     cr_assert_eq(my_result, result);
+// }
