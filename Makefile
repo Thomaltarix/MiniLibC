@@ -20,9 +20,9 @@ SRC	=	src/strlen.asm		\
 		src/memcpy.asm		\
 		src/strcmp.asm		\
 		src/memmove.asm		\
-		src/strncmp.asm		\
 		src/strcasecmp.asm	\
-		src/strncmp.asm	\
+		src/strncmp.asm		\
+		src/strstr.asm		\
 		src/strpbrk.asm	\
 
 OBJ	= $(SRC:.asm=.o)
@@ -39,7 +39,6 @@ TEST_SRC	=	tests/tests_strlen.c	\
 				tests/tests_memset.c	\
 				tests/tests_memcpy.c	\
 				tests/tests_strcmp.c	\
-				tests/tests_memmove.c	\
 				tests/tests_strncmp.c	\
 				tests/tests_strcasecmp.c\
 				tests/tests_memmove.c	\

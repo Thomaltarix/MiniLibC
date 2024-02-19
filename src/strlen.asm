@@ -7,9 +7,8 @@ strlen:              ; Loops through the string to return its len
         MOV RCX, 0              ; Initializes the counter
 
         .loop:                  ; Loop which checks if the character is null or not
-                CMP BYTE [RDI], 0       ; Checks if the character is null
+                CMP BYTE [RDI + RCX], 0       ; Checks if the character is null
                 JE .end                 ; True -> jumps to the end
-                INC RDI                 ; Increments the pointer
                 INC RCX                 ; False -> increments the length = the result
                 JMP .loop               ; Jumps to the loop
 

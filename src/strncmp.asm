@@ -9,10 +9,10 @@ strncmp:
         XOR R9, R9      ; Clear R9
 
         .loop:
-                CMP RDX, 0      ; Check for null terminator
+                CMP RDX, RCX    ; Check if counter is equal to length
                 JE .exit        ; If null terminator, jump to exit
-                MOV R8B, BYTE [RDI] ; Load byte from first string
-                MOV R9B, BYTE [RSI] ; Load byte from second string
+                MOV R8B, BYTE [RDI + RCX] ; Load byte from first string
+                MOV R9B, BYTE [RSI + RCX] ; Load byte from second string
                 CMP R8B, R9B        ; Compare bytes
                 JE .are_equal           ; If not equal, jump to are_equal
                 MOV RAX, R8        ; Move byte to RAX
@@ -23,12 +23,10 @@ strncmp:
         .are_equal:
                 CMP R8B, 0      ; Check for null terminator
                 JE .exit        ; If null terminator, jump to exit
-                INC RDI         ; Increment first string pointer
-                INC RSI         ; Increment second string pointer
-                DEC RDX         ; Decrement counter
+                INC RCX         ; Increment counter
                 JMP .loop       ; Jump to loop
 
         .exit:
-                MOV RAX, RCX    ; Return counter
+                MOV RAX, 0      ; Return 0
                 LEAVE           ; Epilogue
                 RET             ; Return
