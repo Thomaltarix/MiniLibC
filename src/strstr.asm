@@ -3,41 +3,38 @@ SECTION .text           ; Code section
 GLOBAL strstr           ; export "strstr"
 
 strstr:
-        ENTER 0,0           ; starts the program
-        MOV RDX, RSI        ; Moves the pointer of s to RDX
+        ENTER 0, 0      ; Prologue
+        MOV RCX, 0      ; Initialize the counter
+        MOV RDX, 0      ; Initialize the second counter
+        JMP .loop
 
-        .loop:              ; loop to find the c character
-                MOV R8B, BYTE [RDX]          ; Moves the character of s to R8B
-                CMP BYTE [RDI], R8B     ; Compares the character of s with the character of needle
-                JNE .not_equal          ; If the characters are not equal, jump to .not_equal
-                JE .equal               ; If the characters are equal, jump to .equal
+        .loop:
+                CMP BYTE [RSI + RCX], 0         ; Check if the needle is empty
+                JE .found                       ; If it is, jump to .found
+                CMP BYTE [RDI + RDX], 0         ; Check if the haystack is empty
+                JE .not_found                   ; If it is, jump to .notfound
+                MOV R8B, BYTE [RSI + RCX]            ; Load the current character of the needle
+                CMP BYTE [RDI + RDX], R8B       ; Compare it with the current character of the haystack
+                JE .match                       ; If they are the same, jump to .match
+                JNE .next                       ; If they are different, jump to .next
 
-        .not_equal:
-                INC RDI                ; Increments the pointer of haystack
-                JMP .loop              ; Jumps to the beginning of the loop
+        .not_found:
+                MOV RAX, 0                      ; Return 0
+                LEAVE                           ; Epilogue
+                RET
 
-        .equal:
-                MOV RCX, RDI           ; Moves the pointer of haystack to RCX
-                INC RCX                ; Increments the pointer of haystack
-                MOV RSI, RDX           ; Moves the pointer of s to RSI
-                INC RSI                ; Increments the pointer of s
-                JMP .compare           ; Jumps to .compare
+        .found:
+                MOV RAX, RDI                    ; Return the address of the first occurrence of the needle
+                LEAVE                           ; Epilogue
+                RET
 
-        .compare:
-                CMP BYTE [RCX], 0         ; Compares the character of haystack with the null character
-                JE .end                    ; If the character is the null character, jump to .end
-                CMP BYTE [RSI], 0         ; Compares the character of s with the null character
-                JE .end                    ; If the character is the null character, jump to .end
-                MOV R8B, BYTE [RSI]         ; Moves the character of s to R8B
-                CMP BYTE [RCX], R8B         ; Compares the character of s with the character of needle
-                JE .equal2                 ; If the characters are equal, jump to .equal2
+        .next:
+                INC RDI                         ; Move to the next character of the haystack
+                MOV RCX, 0                      ; Reset the counter
+                MOV RDX, 0                      ; Reset the second counter
+                JMP .loop                       ; Repeat the loop
 
-        .equal2:
-                INC RCX                ; Increments the pointer of haystack
-                INC RSI                ; Increments the pointer of s
-                JMP .compare           ; Jumps to the beginning of the loop
-
-        .end:
-                MOV RAX, RDI           ; Moves the pointer of haystack to RAX
-                LEAVE                  ; Ends the program
-                RET                    ; Returns the pointer of haystack
+        .match:
+                INC RCX                         ; Move to the next character of the needle
+                INC RDX                         ; Move to the next character of the haystack
+                JMP .loop                       ; Repeat the loop
