@@ -160,4 +160,3 @@ Test(strcspn, zero_ended_string_reject2)
     result = strcspn(test, "\0");
     cr_assert_eq(my_result, result);
 }
-m
