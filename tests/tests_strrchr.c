@@ -76,3 +76,9 @@ Test(my_strrchr, empty_source2, .init = redirect_all_std)
     char *test = "\0";
     cr_assert_str_eq(my_strrchr(test, '\0'), strrchr(test, '\0'));
 }
+
+Test(my_strrchr, empty_source3, .init = redirect_all_std)
+{
+    char *test = "Hello, world!";
+    cr_assert_str_eq(my_strrchr(test, '\0'), strrchr(test, '\0'));
+}
