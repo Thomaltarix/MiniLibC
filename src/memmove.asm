@@ -3,27 +3,26 @@ SECTION .text           ; Code section
 GLOBAL memmove          ; export "memmove"
 
 memmove:
-        ENTER 0,0       ; Prologue
-        MOV RCX, 0      ; Initialize counter
-        MOV R8, RDI     ; Save destination pointer
+        ENTER 0, 0              ; Prologue
+        XOR RCX, RCX            ; Initialize counter
+        JMP .check_null         ; Jump to check for null pointers
 
-        .get_string:    ; Get copy of source
-                CMP RCX, RDX                    ; Compare counter with length
-                JE .set_string                  ; If equal, the string is copied
-                MOV R9B, [RSI + RCX]            ; Move byte from source to destination
-                MOV BYTE [R8 + RCX], R9B        ; Move byte from source to destination
-                INC RCX                         ; Increment counter
-                JMP .get_string                 ; Jump to loop
+        .loop:
+                CMP RDX, RCX            ; Compare counter with length
+                JE .end                 ; Jump to end if equal
+                MOV R10B, [RSI + RCX]   ; Move byte from source to R10B
+                MOV [RDI + RCX], R10B   ; Move byte from R10B to destination
+                INC RCX                 ; Increment counter
+                JMP .loop               ; Jump to loop
 
-        .set_string:    ; Set the dest to the copy of the source
-                XOR RCX, RCX                    ; Reset counter
-                CMP RCX, RDX                    ; Compare counter with length
-                JE .end                         ; If equal, jump to end
-                MOV R9B, [R8 + RCX]             ; Move byte from source to destination
-                MOV BYTE [RAX + RCX], R9B       ; Move byte from source to destination
-                INC RCX                         ; Increment counter
-                JMP .set_string                 ; Jump to set_string
+        .check_null:
+                CMP RDI, 0              ; Check if destination pointer is null
+                JE .end                 ; Jump to end if null
+                CMP RSI, 0              ; Check if source pointer is null
+                JE .end                 ; Jump to end if null
+                JMP .loop               ; Jump to compare if not null
 
         .end:
-                LEAVE                           ; Epilogue
-                RET                             ; Return
+                MOV RAX, RDI            ; Return destination pointer
+                LEAVE                   ; Epilogue
+                RET                     ; Return
