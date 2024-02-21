@@ -5,8 +5,6 @@ GLOBAL strrchr, rindex        ; export "strrchr"
 rindex:
 strrchr:
         ENTER 0, 0       ; starts the program
-        CMP SIL, 0      ; Checks if the character is null
-        JE .end         ; True -> jump to the end
         MOV RCX, 0      ; Initializes the counter
 
         .start_loop:
@@ -16,6 +14,8 @@ strrchr:
                 JMP .start_loop         ; Jumps to itself
 
         .go_to_loop:
+                CMP SIL, 0              ; Checks if it's the end of the string
+                JE .found               ; True -> jump to the found
                 DEC RCX                 ; Decrements the counter
                 JMP .loop               ; Jumps to the loop
 
