@@ -2,27 +2,29 @@ BITS 64                 ; 64-bit mode
 SECTION .text           ; Code section
 GLOBAL memmove          ; export "memmove"
 
+
 memmove:
-        ENTER 0, 0              ; Prologue
-        XOR RCX, RCX            ; Initialize counter
-        JMP .check_null         ; Jump to check for null pointers
+        ENTER 0, 0              ; Prolog
+        MOV RCX, 0              ; Initialize counter
+        JMP .push_rsi           ; Jump to .push_rsi
 
-        .loop:
-                CMP RDX, RCX            ; Compare counter with length
-                JE .end                 ; Jump to end if equal
-                MOV R10B, [RSI + RCX]   ; Move byte from source to R10B
-                MOV [RDI + RCX], R10B   ; Move byte from R10B to destination
-                INC RCX                 ; Increment counter
-                JMP .loop               ; Jump to loop
+        .push_rsi:
+                CMP RCX, RDX                    ; Compare counter with len
+                JE .pop_rsi                     ; If equals -> jump to .pop_rsi
+                MOV R8B, BYTE [RSI + RCX]       ; Move byte from src to R8B
+                PUSH R8                         ; Push byte to stack
+                INC RCX                         ; Increment counter
+                JMP .push_rsi                   ; Loop
 
-        .check_null:
-                CMP RDI, 0              ; Check if destination pointer is null
-                JE .end                 ; Jump to end if null
-                CMP RSI, 0              ; Check if source pointer is null
-                JE .end                 ; Jump to end if null
-                JMP .loop               ; Jump to compare if not null
+        .pop_rsi:
+                CMP RCX, 0                      ; Compare counter with 0
+                JE .exit                        ; If equals -> jump to .exit
+                POP R8                          ; Pop byte from stack
+                DEC RCX                         ; Decrement counter
+                MOV BYTE [RDI + RCX], R8B       ; Move byte from R8B to dest
+                JMP .pop_rsi                    ; Loop
 
-        .end:
-                MOV RAX, RDI            ; Return destination pointer
-                LEAVE                   ; Epilogue
-                RET                     ; Return
+        .exit:
+                MOV RAX, RDI                    ; Return dest
+                LEAVE                           ; Epilog
+                RET                             ; Return
