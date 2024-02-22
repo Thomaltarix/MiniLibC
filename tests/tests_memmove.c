@@ -131,3 +131,22 @@ Test(memmove, negative_overlap_2)
     tmp = memcmp(dest, "Hello World", 12);
     cr_assert_eq(tmp, 0);
 }
+
+Test(memmove, big_string)
+{
+    char src[800000];
+    char dest[800000];
+    int tmp;
+
+    memset(src, 'a', 800000);
+    memset(dest, 'b', 800000);
+    my_memmove(dest, src, 800000);
+    cr_assert_eq(tmp, 0);
+}
+
+Test(memmove, overlap4)
+{
+    char src[100] = "Geeksfor";
+    my_memmove(src+5, src, strlen(src));
+    cr_assert_str_eq(src, "GeeksGeeksfor");
+}
