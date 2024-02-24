@@ -134,13 +134,13 @@ Test(memmove, negative_overlap_2)
 
 Test(memmove, big_string)
 {
-    char src[800000];
-    char dest[800000];
+    char src[2000000];
+    char dest[2000000];
     int tmp;
 
-    memset(src, 'a', 800000);
-    memset(dest, 'b', 800000);
-    my_memmove(dest, src, 800000);
+    memset(src, 'a', 2000000);
+    memset(dest, 'b', 2000000);
+    my_memmove(dest, src, 2000000);
     cr_assert_eq(tmp, 0);
 }
 
